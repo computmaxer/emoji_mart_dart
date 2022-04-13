@@ -1,52 +1,52 @@
 import 'dart:html';
-import 'dart:js_util';
 
 import 'package:emoji_mart/emoji_mart.dart';
-import 'package:react/react.dart' as react;
+import 'package:over_react/over_react.dart';
 import 'package:react/react_dom.dart' as react_dom;
 
+part 'main.over_react.g.dart';
+
 void main() {
-  react_dom.render(ExampleComponent({}), querySelector('#picker'));
+  react_dom.render(ExampleComponent()(), querySelector('#picker'));
 }
 
-var ExampleComponent = react.registerComponent2(() => new _ExampleComponent());
+mixin ExampleComponentProps on UiProps {}
 
-class _ExampleComponent extends react.Component2 {
-  get initialState => {
-        'pickerOpen': false,
-        'selectedEmoji': null,
-      };
+UiFactory<ExampleComponentProps> ExampleComponent = uiFunction((props) {
+  final pickerOpen = useState(false);
+  final selectedEmoji = useState<EmojiData>(null);
 
-  handleBtnClick(_) {
-    this.setState({
-      'pickerOpen': !state['pickerOpen'],
-    });
+  void handleBtnClick(_) {
+    pickerOpen.set(!pickerOpen.value);
   }
 
-  handleEmojiSelection(emoji, event) {
-    window.console.log(emoji);
-    this.setState({'selectedEmoji': emoji, 'pickerOpen': false});
+  void handleEmojiSelection(emoji) {
+    selectedEmoji.set(emoji);
+    pickerOpen.set(false);
   }
 
-  render() {
-    return react.div({}, [
-      react.div({
-        'key': '1'
-      }, [
-        react.button({'key': 'btn', 'onClick': handleBtnClick}, 'Picker'),
-        react.span({'key': 'selection'}, " Selection: "),
-        if (state['selectedEmoji'] != null)
-          Emoji({
-            'key': 'emoji',
-            'emoji': getProperty(state['selectedEmoji'], 'id'),
-            'set': 'google',
-            'size': 16
-          }),
-      ]),
-      if (state['pickerOpen'])
-        Picker(
-            {'key': 'picker', 'set': 'google', 'onClick': handleEmojiSelection},
-            []),
-    ]);
-  }
-}
+  return Dom.div()(
+    Dom.div()(
+      Dom.span()('Example emoji component: '),
+      (Emoji()
+        ..emoji = 'grinning'
+        ..set = 'google'
+        ..size = 16)(),
+    ),
+    Dom.div()(
+      (Dom.button()..onClick = handleBtnClick)('Picker'),
+      Dom.span()(" Selection: "),
+      selectedEmoji.value != null
+          ? (Emoji()
+            ..emoji = selectedEmoji.value.id
+            ..set = 'google'
+            ..size = 16)()
+          : null,
+    ),
+    pickerOpen.value
+        ? (Picker()
+          ..set = 'google'
+          ..onSelect = handleEmojiSelection)()
+        : null,
+  );
+}, _$ExampleComponentConfig);

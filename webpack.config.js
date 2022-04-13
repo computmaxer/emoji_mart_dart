@@ -7,5 +7,5 @@ module.exports = {
     filename: 'emoji-mart.min.js',
     library: 'EmojiMart',
     path: path.resolve(__dirname, 'lib/'),
-  }
+  },
 };
