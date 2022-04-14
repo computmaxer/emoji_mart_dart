@@ -1,8 +1,6 @@
-import 'package:react/react_client.dart' show ReactJsComponentFactoryProxy;
-
-import 'src/js_interop.dart';
-
-final Picker = ReactJsComponentFactoryProxy(EmojiMart.Picker);
-final NimblePicker = ReactJsComponentFactoryProxy(EmojiMart.NimblePicker);
-final Emoji = ReactJsComponentFactoryProxy(EmojiMart.Emoji);
-final NimbleEmoji = ReactJsComponentFactoryProxy(EmojiMart.NimbleEmoji);
+export 'src/components/emoji.dart' show Emoji, EmojiProps;
+export 'src/components/nimble_emoji.dart' show NimbleEmoji, NimbleEmojiProps;
+export 'src/components/nimble_picker.dart' show NimblePicker, NimblePickerProps;
+export 'src/components/picker.dart' show Picker, PickerProps;
+export 'src/emoji_index.dart' show EmojiIndex;
+export 'src/js_interop.dart' show EmojiData;

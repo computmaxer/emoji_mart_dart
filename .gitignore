@@ -1,5 +1,6 @@
 node_modules
 .dart_tool
 .packages
+pubspec.lock
 
 lib/emoji-mart.min.js.LICENSE.txt
