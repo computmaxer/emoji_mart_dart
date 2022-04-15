@@ -38,6 +38,19 @@ mixin EmojiPropsMixin on UiProps {
   @Accessor(key: 'onClick')
   void Function(EmojiData emoji, SyntheticMouseEvent event) onEmojiClick;
 
+  /// We cannot use `onClick` since it is defined in [UiProps] as a function
+  /// that takes one param, and the underlying JS component takes two params.
+  /// We redirect consumers to use [onEmojiClick] as a workaround.
+  @Deprecated(
+      'Setting this will cause runtime errors. Use onEmojiClick instead.')
+  @override
+  get onClick;
+
+  @Deprecated(
+      'Setting this will cause runtime errors. Use onEmojiClick instead.')
+  @override
+  set onClick(value);
+
   /// Called when the mouse leaves this emoji.
   void Function(EmojiData emoji, SyntheticMouseEvent event) onLeave;
 

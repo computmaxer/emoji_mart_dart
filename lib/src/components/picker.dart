@@ -74,6 +74,19 @@ mixin PickerPropsMixin on UiProps {
   @Accessor(key: 'onClick')
   void Function(EmojiData emoji, SyntheticMouseEvent event) onEmojiClick;
 
+  /// We cannot use `onClick` since it is defined in [UiProps] as a function
+  /// that takes one param, and the underlying JS component takes two params.
+  /// We redirect consumers to use [onEmojiClick] as a workaround.
+  @Deprecated(
+      'Setting this will cause runtime errors. Use onEmojiClick instead.')
+  @override
+  get onClick;
+
+  @Deprecated(
+      'Setting this will cause runtime errors. Use onEmojiClick instead.')
+  @override
+  set onClick(value);
+
   /// Callback fired when an emoji is selected.
   void Function(EmojiData emoji) onSelect;
 
